@@ -1,0 +1,25 @@
+.sno__navbar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.sno__navbar-spacer {
+    width: 1348px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sno__navbar-shortcuts {
+    width: 535px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.sno__navbar-shortcluts-link {
+    font-family: IBM_Plex_Sans;
+
+}
+
