@@ -1,9 +1,7 @@
 :root {
-  --font: 'Work Sans', sans-serif;
-  --font-num: 'Space Mono', monospace;
 
   --font-size-small: 16px;
-  --font-size-medium: 38px;
+  --font-size-medium: 26px;
   --font-size-large: 48px;
   --font-size-largest: 58px;
   
@@ -23,28 +21,21 @@
   --margin-small: 15px;
   --margin-medium-small: 20px;
   --margin-medium: 25px;
-  --margin-medium-large: 30px;
-  --margin-large: 40px;
-  --margin-larger: 60px;
-  --margin-largest: 80px;
 
-  --padding-smallest: 10px;
-  --padding-smaller: 15px;
-  --padding-small: 20px;
-  --padding-medium-small: 25px;
-  --padding-medium: 30px;
-  --padding-medium-large: 40px;
-  --padding-large: 50px;
-  --padding-larger: 60px;
-  --padding-largest: 80px;
   
-  --color-primary: #A259FF;
+  --color-secondary: #EDEDEDFF;
   --color-transparent: #322929FF;
   --color-text: #fff;
   --text-secondary: #CCC;
   --color-bg: #2B2B2B;
+
 }
 
+
+@font-face {
+ font-family: 'IBM Plex Sans';
+  src: url(./assets/Fonts/ibmplexsans-variablefont_wdthwght-webfont.woff)
+}
 
 
 @media screen and (max-width: 1050px) {
@@ -55,3 +46,4 @@
 
   }
 }
+

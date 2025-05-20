@@ -1,6 +1,7 @@
 
 import './App.css'
 import Navbar from './components'
+import Header from './containers'
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <>
       <div className='app'>
        <Navbar/>
+       <Header/>
       </div>
     </>
   )

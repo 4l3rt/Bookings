@@ -4,31 +4,50 @@
   box-sizing: border-box;
 }
 
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
 .app {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-image: url('./assets/imgs/HeaderImg.png');
+  background-image: url("./assets/imgs/HeaderImg.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
+
+  
 }
 
 .color-transparent {
   background-color: #32292980;
 }
 
+h1, h2, p, a {
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
 h1 {
-    font-family: IBM_Plex_Sans;
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-heavy);
     color: var(--color-text);
 }
 
 h2 {
-  
+  color: var(--color-text);
+  font-weight: var( --font-weight-medium)
 }
 
+p {
+  color: var(--color-text);
+  font-weight: var(--font-weight-light);
+  max-width: 345px;
+  text-align: center;
+  line-height: var( --line-height-small);
+  
+}
 
 .txt-small {
   color: var(--color-text);

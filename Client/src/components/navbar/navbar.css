@@ -1,25 +1,24 @@
+
+.sno__navbar, .sno__navbar-spacer, .sno__navbar-shortcuts {
+    display: flex;
+}
+
 .sno__navbar {
     height: 80px;
-    display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .sno__navbar-spacer {
     width: 1348px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .sno__navbar-shortcuts {
     width: 535px;
-    display: flex;
     justify-content: space-between;
+    font-family: sans-serif;
 }
 
-
-.sno__navbar-shortcluts-link {
-    font-family: IBM_Plex_Sans;
-
-}
 
