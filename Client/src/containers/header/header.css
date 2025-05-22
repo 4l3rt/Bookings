@@ -14,10 +14,11 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  
 }
 
 .sno__header-booking-form-input-spacer {
-  margin: 50px 0;
+  margin: 0px 10px;
   display: flex;
   max-width: 600px;
   flex-wrap: wrap;
@@ -31,9 +32,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
-input {
+.sno__header-input {
   padding: 10px 0;
   border: 1px solid gray;
   outline: none;
@@ -41,19 +43,17 @@ input {
   border-radius: 4%;
   background-color: var(--color-secondary);
   margin-top: 12px;
-
 }
 
-.input-large{
+.container-large{
     width: 150px;
 }
 
-.input-medium {
-
+.container-medium {
     width: 100px;
 }
 
-.input-small {
+.container-small {
     width: 50px;
 }
 
@@ -63,16 +63,12 @@ input {
   text-align: center;
 }
 
-
 .flag-btn {
   background-color: white;
   height: 38px;
   border-radius: 4%;
   margin-top: 12px;
-
-
 }
-
 
 .custom-phone-input {
    max-width: 140px;
@@ -84,3 +80,54 @@ input {
 .phone-costum-margin {
   margin-bottom: 12px;
 }
+
+.notify-costum-margin {
+  margin-bottom: 5px;
+}
+
+.letUsKnow-costum-margin {
+  margin-bottom: 10px;
+}
+
+.sno__total {
+  margin-bottom: 15px;
+}
+
+.son__booking-submit-btn {
+  padding: 10px;
+  font-style: bold;
+  color: beige;
+  background-color: blue;
+  margin-top: 20px;
+
+ 
+}
+
+.sno__header-form-keepInMind {
+  font-weight: 100 !important;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  animation: slideFadeIn 0.3s ease-out;
+  color: var(--text-secondary);
+}
+
+
+
+.react-datepicker__day--keyboard-selected {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

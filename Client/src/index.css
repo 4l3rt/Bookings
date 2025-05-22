@@ -4,6 +4,7 @@
   --font-size-medium: 26px;
   --font-size-large: 48px;
   --font-size-largest: 58px;
+  --font-size-error: 2px
   
   --font-weight-light: 200;
   --font-weight-medium-light: 400;
@@ -13,8 +14,6 @@
 
   --line-height-smallest: 110%;
   --line-height-small: 130%;
-  --line-height-medium: 140%;
-  --line-height-large: 160%;
 
   --margin-smallest: 5px;
   --margin-smaller: 10px;
@@ -26,8 +25,9 @@
   --color-secondary: #EDEDEDFF;
   --color-transparent: #322929FF;
   --color-text: #fff;
-  --text-secondary: #CCC;
+  --text-secondary: #AAAAAA;
   --color-bg: #2B2B2B;
+  --color-error: red;
 
 }
 
