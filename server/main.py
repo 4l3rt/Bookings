@@ -1,10 +1,26 @@
 from fastapi import FastAPI, HTTPException, Query
 from uuid import uuid4
-from datetime import datetime
+from datetime import  datetime
 from db import bookings, availability
 from models import BookingRequest, BookingResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  
+    "http://localhost:3000",  
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/bookings/", response_model=BookingResponse)
 async def create_booking(payload: BookingRequest):
@@ -28,3 +44,4 @@ async def get_availability(
         return []
     # filter ranges for this room
     return [r for r in doc["ranges_by_room"].get(str(roomId), [])]
+

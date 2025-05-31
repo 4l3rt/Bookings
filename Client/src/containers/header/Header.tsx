@@ -17,7 +17,8 @@ const ROOM_RATES: Record<RoomType, number> = {
 
 
 export  function Header() {
-
+  
+  const [bookedRanges, setBookedRanges] = useState<Array<{ start: Date; end: Date }>>([]);
   const [room, setRoom] = useState<RoomType>('twin');
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
@@ -26,6 +27,11 @@ export  function Header() {
   const [name, setName] = useState<string>("")
   const [country, setCountry] = useState('US');
   const [phone, setPhone] = useState('');
+  const roomId = (room: RoomType) => {
+    if (room === 'twin') return 1;
+    if (room === 'double') return 2;
+    return 3;
+};
 
   const [nameError, setNameError] = useState<string>('');
   const [phoneError, setPhoneError] = useState<string>('');
@@ -37,6 +43,29 @@ export  function Header() {
     d.setDate(d.getDate() + days);
     return d;
   };
+
+  useEffect(() => {
+  const fetchAvailability = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/availability/?roomId=${roomId(room)}`);
+      const data = await res.json();
+      const parsed = data.map((range: [string, string]) => ({
+        start: new Date(range[0]),
+        end: new Date(range[1]),
+      }));
+      setBookedRanges(parsed);
+    } catch (err) {
+      console.error('Failed to fetch availability:', err);
+    }
+
+  };
+
+  fetchAvailability();
+}, [room]);
+
+
+
+
 
   const minCheckOut = useMemo(() => {
     const base = checkIn || new Date();
@@ -141,6 +170,7 @@ const nights = useMemo(() => {
                     placeholderText="MM/DD/YY"
                     onKeyDown={e => e.preventDefault()}
                     shouldCloseOnSelect={true}
+                    excludeDateIntervals={bookedRanges}
                   />
                   {calendarError && <p className="error">{calendarError}</p>}
                 </label>
@@ -152,13 +182,14 @@ const nights = useMemo(() => {
                     className="sno__header-input input-picker"
                     selected={checkOut}
                     onChange={date => setCheckOut(date)}
-                    selectsStart
+                    selectsEnd
                     startDate={checkIn}
                     minDate={minCheckOut}
                     endDate={checkOut}
                     placeholderText="MM/DD/YY"
                     onKeyDown={e => e.preventDefault()}
                     shouldCloseOnSelect={true}
+                    excludeDateIntervals={bookedRanges}
                     />
                 </label>
 
@@ -237,10 +268,10 @@ const nights = useMemo(() => {
 
                   <p className="notify-costum-margin">How should we notify you?</p>
                   <select>
-                    <option value="twin">Whatsapp</option>
-                    <option value="double">Signal</option>
-                    <option value="double">Telegram</option>
-                    <option value="family">SMS</option>
+                    <option value="whatsapp">Whatsapp</option>
+                    <option value="signal">Signal</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="sms">SMS</option>
                   </select>
 
                   { canSubmit && (
@@ -257,12 +288,12 @@ const nights = useMemo(() => {
                         opacity: canSubmit ? 1 : 0.5,
                         cursor: canSubmit ? 'pointer' : 'not-allowed'
                       }}
-                      onClick={handleSubmit}
+                      onSubmit={handleSubmit}
                   >Book Now</button>
 
                  </div>
               </div>
-            <p className="sno__header-form-feepInMind">Problem booking or any qestions?  <p>no worries! just <a href="2">let us know</a></p></p>
+            <p className="sno__header-form-feepInMind">Problem booking or any qestions?  <span>no worries! just <a href="2">let us know</a></span></p>
         </form>
     </div>
   )
