@@ -7,6 +7,13 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { countryCodes } from "./countryData";
 
+
+
+const apiUrl = import.meta.env.VITE_SERVER_IP;
+
+
+
+
 const today = new Date();
 type RoomType = 'twin' | 'double' | 'family';
 const ROOM_RATES: Record<RoomType, number> = {
@@ -47,7 +54,7 @@ export  function Header() {
   useEffect(() => {
   const fetchAvailability = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/availability/?roomId=${roomId(room)}`);
+      const res = await fetch(`http://${apiUrl}/availability/?roomId=${roomId(room)}`);
       const data = await res.json();
       const parsed = data.map((range: [string, string]) => ({
         start: new Date(range[0]),
@@ -298,3 +305,7 @@ const nights = useMemo(() => {
     </div>
   )
 }
+
+
+
+
