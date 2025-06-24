@@ -2,10 +2,8 @@ import "./header.css"
 import  { useState, useMemo, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import ReactFlagsSelect from 'react-flags-select';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { countryCodes } from "./countryData";
 
 
 
@@ -32,13 +30,14 @@ export  function Header() {
   const [adults, setAdults] = useState<number>(1);
   const [kids, setKids] = useState<number>(0);
   const [name, setName] = useState<string>("")
-  const [country, setCountry] = useState('US');
   const [phone, setPhone] = useState('');
   const roomId = (room: RoomType) => {
     if (room === 'twin') return 1;
     if (room === 'double') return 2;
     return 3;
 };
+const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
+
 
   const [nameError, setNameError] = useState<string>('');
   const [phoneError, setPhoneError] = useState<string>('');
@@ -79,9 +78,47 @@ export  function Header() {
     return addDays(base, 1);
   }, [checkIn]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Clear old error
+
+  if (!checkIn || !checkOut || !name || !phone) {
+    alert("Missing required fields.");
+    return;
+  }
+
+  const payload = {
+    name,
+    phone,
+    roomId: roomId(room),
+    checkIn: checkIn.toISOString(),
+    checkOut: checkOut.toISOString(),
+    adults,
+    kids,
+    notifyVia,
+    source: "manual",
+  };
+
+  try {
+    const res = await fetch("http://127.0.0.1:8007/bookings/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Booking failed");
+
+    alert("Booking submitted successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to send booking.");
+  }
+
+
     setCalendarError(null);
 
   }
@@ -231,42 +268,28 @@ const nights = useMemo(() => {
                 <label className="sno__header-booking-form-input-container container-large">
                   <p>Full Name</p>
                   <input 
-                    className="sno__header-input"
+                    className="sno__header-input sno__nameInpud-padding"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    placeholder="Your full name"
+                    placeholder="Gela Geladze"
                     >
                   </input>
                   {nameError && <p className="error">{nameError}</p>}
                 </label>
 
-                <label  className="sno__header-booking-form-input-container container-medium" >
-                  <p>Country</p>
-                  <ReactFlagsSelect
-                    countries={countryCodes}
-                    selected={country}
-                    onSelect={code => setCountry(code)}
-                    showSelectedLabel={false}
-                    showOptionLabel={false}
-                    className="flag-btn"
-                    searchable={true}
-
-
-                  />
-                </label>
-
                 <label className="sno__header-booking-form-input-container container-large">
-                  <p className="phone-costum-margin">Phone Number</p>
+                  <p className="phone-costum-margin">Phone Number </p>
                   <PhoneInput
-                  country={country.toLowerCase()}
+                  country={"ge"}
                   value={phone}
                   onChange={setPhone}
-                  buttonStyle={{ display: 'none' }}
+                  containerClass="custom-phone-container"
                   inputClass="custom-phone-input"
                   />
                   {phoneError && <div className="error">{phoneError}</div>}
                 </label>
 
+                 </div>
                 <div className="sno__header-booking-form-input-container container-mdeium">
 
                 {checkIn && checkOut && (
@@ -274,7 +297,7 @@ const nights = useMemo(() => {
                 )}
 
                   <p className="notify-costum-margin">How should we notify you?</p>
-                  <select>
+                  <select value={notifyVia} onChange={(e) => setNotifyVia(e.target.value)}>
                     <option value="whatsapp">Whatsapp</option>
                     <option value="signal">Signal</option>
                     <option value="telegram">Telegram</option>
@@ -282,10 +305,9 @@ const nights = useMemo(() => {
                   </select>
 
                   { canSubmit && (
-                    <p className="sno__header-form-keepInMind" ><b>Note:</b> Please make sure the entered phone number is correct. If you don't reply to our confirmation in a day or two we will have to cancel your booking ;(( </p>
+                    <p className="sno__header-form-keepInMind" ><b>Note:</b> Please make sure the mobile number is correct. If you don't reply to our confirmation in a day or two we will have to cancel your booking ;(( </p>
 
                   )}
-
 
                   <button
                       className="son__booking-submit-btn"
@@ -297,8 +319,6 @@ const nights = useMemo(() => {
                       }}
                       onSubmit={handleSubmit}
                   >Book Now</button>
-
-                 </div>
               </div>
             <p className="sno__header-form-feepInMind">Problem booking or any qestions?  <span>no worries! just <a href="2">let us know</a></span></p>
         </form>
