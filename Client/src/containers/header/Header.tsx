@@ -8,6 +8,7 @@ import 'react-phone-input-2/lib/style.css';
 
 
 const apiUrl = import.meta.env.VITE_SERVER_IP;
+const bookingsUrl = import.meta.env.VITE_BOOKINGS_URL
 
 
 
@@ -101,7 +102,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
   };
 
   try {
-    const res = await fetch("http://192.168.100.13:8007/bookings", {
+    const res = await fetch(`${bookingsUrl}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
