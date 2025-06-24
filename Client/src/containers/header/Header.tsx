@@ -101,7 +101,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
   };
 
   try {
-    const res = await fetch("http://192.168.100.13:8007/bookings/", {
+    const res = await fetch("http://192.168.100.13:8007/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,8 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || "Booking failed");
 
-    alert("Booking submitted successfully!");
+    alert("Booking request submitted successfully! We will contact you as soon as possible");
+    window.location.reload(); 
   } catch (err) {
     console.error(err);
     alert("Failed to send booking.");
