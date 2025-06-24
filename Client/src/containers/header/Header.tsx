@@ -184,7 +184,7 @@ const nights = useMemo(() => {
 
   return (
     <div className="sno__header" >
-        <form className="sno__header-booking-form color-transparent">
+        <form className="sno__header-booking-form color-transparent" onSubmit={handleSubmit}>
             <div className="sno__header-booking-form-input-spacer">
 
                 <label className="sno__header-booking-form-input-container  container-medium ">
@@ -317,7 +317,6 @@ const nights = useMemo(() => {
                         opacity: canSubmit ? 1 : 0.5,
                         cursor: canSubmit ? 'pointer' : 'not-allowed'
                       }}
-                      onSubmit={handleSubmit}
                   >Book Now</button>
               </div>
             <p className="sno__header-form-feepInMind">Problem booking or any qestions?  <span>no worries! just <a href="2">let us know</a></span></p>
