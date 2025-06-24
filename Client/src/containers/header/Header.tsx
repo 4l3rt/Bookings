@@ -101,7 +101,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
   };
 
   try {
-    const res = await fetch("http://127.0.0.1:8007/bookings/", {
+    const res = await fetch("http://192.168.100.13:8007/bookings/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
