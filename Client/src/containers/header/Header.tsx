@@ -80,6 +80,22 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
   }, [checkIn]);
 
 
+  const nights = useMemo(() => {
+    if (!checkIn || !checkOut) return 0;
+    const msPerDay = 1000 * 60 * 60 * 24;
+    return Math.max(
+      0,
+      Math.ceil((checkOut.getTime() - checkIn.getTime()) / msPerDay)
+    );
+  }, [checkIn, checkOut]);
+
+
+  const roomRate = ROOM_RATES[room];
+  const total = nights * roomRate;
+
+  
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,7 +114,9 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
     adults,
     kids,
     notifyVia,
+    total,
     source: "manual",
+
   };
 
   try {
@@ -119,7 +137,6 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
     console.error(err);
     alert("Failed to send booking.");
   }
-
 
     setCalendarError(null);
 
@@ -150,6 +167,9 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
     }
   }, [phone]);
 
+
+  
+
 useEffect(() => {
     setCanSubmit(
       nameError === '' &&
@@ -168,20 +188,6 @@ useEffect(() => {
     phone,
   ]);
 
-const nights = useMemo(() => {
-    if (!checkIn || !checkOut) return 0;
-    const msPerDay = 1000 * 60 * 60 * 24;
-    return Math.max(
-      0,
-      Math.ceil((checkOut.getTime() - checkIn.getTime()) / msPerDay)
-    );
-  }, [checkIn, checkOut]);
-
-
-  const roomRate = ROOM_RATES[room];
-  const total = nights * roomRate;
-
-  
 
 
   return (
@@ -326,7 +332,6 @@ const nights = useMemo(() => {
     </div>
   )
 }
-
 
 
 
