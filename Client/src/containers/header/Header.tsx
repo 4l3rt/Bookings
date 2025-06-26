@@ -54,7 +54,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
   useEffect(() => {
   const fetchAvailability = async () => {
     try {
-      const res = await fetch(`http://${apiUrl}/availability/?roomId=${roomId(room)}`);
+      const res = await fetch(`https://${apiUrl}/availability/?roomId=${roomId(room)}`);
       const data = await res.json();
       const parsed = data.map((range: [string, string]) => ({
         start: new Date(range[0]),
