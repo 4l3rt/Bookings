@@ -56,7 +56,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
     try {
       const res = await fetch(`${apiUrl}/availability?roomId=${roomId(room)}`);
       const data = await res.json();
-      const parsed = data.map((range: [string, string]) => ({
+      const parsed = data.unavailable.map((range: [string, string]) => ({
         start: new Date(range[0]),
         end: new Date(range[1]),
       }));
