@@ -1,0 +1,84 @@
+import os
+from fastapi import FastAPI, Request, HTTPException
+from motor.motor_asyncio import AsyncIOMotorClient
+from bson import ObjectId
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Bot
+from dotenv import load_dotenv
+import sys
+from utils from format_booking_text 
+
+load_dotenv()
+
+MONGODB_URI = os.getenv("MONGO_URI")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+
+client = AsyncIOMotorClient(MONGODB_URI)
+db = client["bookings_app"]
+pending = db.pending
+bookings = db.bookings
+availability = db.availability
+
+bot = Bot(token=BOT_TOKEN)
+app = FastAPI()
+
+@app.post("/notify-booking")
+async def notify_booking(request: Request):
+    data = await request.json()
+    text = format_booking_text(data)
+    buttons = [[
+        InlineKeyboardButton("✅ Approve", callback_data=f"approve:{data.get('_id')}"),
+        InlineKeyboardButton("❌ Reject", callback_data=f"reject:{data.get('_id')}")
+    ]]
+    markup = InlineKeyboardMarkup(buttons)
+    await bot.send_message(chat_id=ADMIN_ID, text=text, reply_markup=markup)
+    await pending.insert_one(data)
+    return {"ok": True}
+
+@app.post("/confirm-booking")
+async def confirm_booking(data: dict):
+    bid = data.get("id")
+    booking = await pending.find_one({"_id": ObjectId(bid)})
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    booking["_id"] = str(booking["_id"])
+    room_id = str(booking["roomId"])
+    check_in = booking["checkIn"]
+    check_out = booking["checkOut"]
+
+    await availability.update_one(
+        {"source": "booking_com"},
+        {"$push": {f"ranges_by_room.{room_id}": [check_in, check_out]}},
+        upsert=True
+    )
+    await bookings.insert_one(booking)
+    await pending.delete_one({"_id": ObjectId(bid)})
+    return {"ok": True, "booking": booking}
+
+@app.post("/reject-booking")
+async def reject_booking(data: dict):
+    bid = data.get("id")
+    result = await pending.delete_one({"_id": ObjectId(bid)})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return {"ok": True}
+
+@app.post("/delete-booking")
+async def delete_booking(data: dict):
+    bid = data.get("id")
+    booking = await bookings.find_one({"_id": ObjectId(bid)})
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    room_id = str(booking["roomId"])
+    check_in = booking["checkIn"]
+    check_out = booking["checkOut"]
+
+    await availability.update_one(
+        {"source": "booking_com"},
+        {"$pull": {f"ranges_by_room.{room_id}": [check_in, check_out]}}
+    )
+    await bookings.delete_one({"_id": ObjectId(bid)})
+    return {"ok": True}
+

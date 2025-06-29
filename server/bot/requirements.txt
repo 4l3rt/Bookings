@@ -1,0 +1,8 @@
+python-telegram-bot
+motor
+python-dotenv
+fastapi
+httpx
+uvicorn
+pydantic
+

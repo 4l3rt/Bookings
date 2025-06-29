@@ -1,0 +1,44 @@
+
+
+services:
+  booking-mongo:
+    image: mongo:6
+    container_name: booking-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+
+  booking-api:
+    build: ./db
+    container_name: booking-api
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      - booking-mongo
+
+  telegram-bot:
+    build: ./bot
+    container_name: telegram-bot
+    ports:
+      - "8007:8007"
+    env_file: .env
+    depends_on:
+      - booking-api
+      - booking-mongo
+  ical-sync:
+    build:
+      context: ./db
+    container_name: ical-sync
+    command: ["python", "ical_sync.py"]
+    env_file: .env
+    depends_on:
+      - booking-mongo
+
+volumes:
+  mongo_data:
+
