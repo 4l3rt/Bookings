@@ -7,7 +7,7 @@ import 'react-phone-input-2/lib/style.css';
 
 
 
-const apiUrl = import.meta.env.VITE_SERVER_IP;
+const apiUrl = import.meta.env.VITE_API_SERVER_IP;
 const bookingsUrl = import.meta.env.VITE_BOOKINGS_URL
 
 
@@ -54,7 +54,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
   useEffect(() => {
   const fetchAvailability = async () => {
     try {
-      const res = await fetch(`${apiUrl}?roomId=${roomId(room)}`);
+      const res = await fetch(`${apiUrl}/availability?roomId=${roomId(room)}`);
       const data = await res.json();
       const parsed = data.map((range: [string, string]) => ({
         start: new Date(range[0]),
