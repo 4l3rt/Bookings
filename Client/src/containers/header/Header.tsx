@@ -131,7 +131,7 @@ const [notifyVia, setNotifyVia] = useState<string>('whatsapp');
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || "Booking failed");
 
-    alert("Booking request submitted successfully! We will contact you as soon as possible");
+    alert("Booking request submitted successfully!\n We will contact you as soon as possible");
     window.location.reload(); 
   } catch (err) {
     console.error(err);
