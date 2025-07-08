@@ -3,7 +3,7 @@ import React, { useMemo, forwardRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IconCard } from "../../components";
-import { calendarSvg } from "../../containers/header"; // Adjust path if needed
+import { calendarSvg } from "../../assets"; // Adjust path if needed
 import { format } from "date-fns";
 
 type CalendarPickerProps = {
