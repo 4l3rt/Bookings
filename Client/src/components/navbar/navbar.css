@@ -1,24 +1,32 @@
-
-.sno__navbar, .sno__navbar-spacer, .sno__navbar-shortcuts {
-    display: flex;
+.sno__navbar,
+.sno__navbar_content-spacer,
+.sno__navbar-shortcuts {
+  display: flex;
+  align-items: center;
 }
 
 .sno__navbar {
-    height: 80px;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  justify-content: center;
 }
 
-.sno__navbar-spacer {
-    width: 1348px;
-    justify-content: space-between;
-    align-items: center;
+.sno__navbar_content-spacer {
+  max-width: 1200px;
+  width: 100%;
+  height: 90px;
+  justify-content: space-between;
 }
 
 .sno__navbar-shortcuts {
-    width: 535px;
-    justify-content: space-between;
-    font-family: sans-serif;
+  width: 535px;
+  justify-content: space-between;
+  align-items: center;
+  font-family: sans-serif;
 }
 
+.sno__navbar_shortcuts_split {
+  width: 2px;
+  height: 15px;
+  background-color: var(--color-secondary);
+}
 

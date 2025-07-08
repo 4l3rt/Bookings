@@ -1,80 +1,51 @@
+.app {
+  background-color: var(--color-bg);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+.light-theme {
+  --color-primary: #EF695F;
+  --color-secondary: #A3A3A3;
+  --color-text: #262729;
+  --color-bg: #fff;
+  --color-bg-secondary: #fff;
+  --color-bg-hover: #E4E4E4;
+  
+}
+
+.dark-theme {
+   --color-primary: #FFCD6A;
+   --color-secondary: #A3A3A3;
+   --color-text: #FFF;
+   --color-bg: #262626;
+   --color-bg-secondary: #373737;
+}
+
+
 a:link, a:visited, a:hover, a:active {
   text-decoration: none;
   color: inherit;
 }
 
-.app {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-image: url("./assets/imgs/HeaderImg.png");
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position: top center;
+.txt-secondary, .txt-primary {
+  font-size: var(--font-size-regular);
+  font-weight: var(--font-weight-regular);
+  font-family: 'IBM Plex Sans', sans-serif;
 
+}
+
+.txt-primary {
+  color: var(--color-text);
   
 }
 
-.color-transparent {
-  background-color: #32292980;
-}
-
-h1, h2, p, a {
-    font-family: 'IBM Plex Sans', sans-serif;
-}
-
-h1 {
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-heavy);
-    color: var(--color-text);
-}
-
-h2 {
-  color: var(--color-text);
-  font-weight: var( --font-weight-medium)
-}
-
-p {
-  color: var(--color-text);
-  font-weight: var(--font-weight-light);
-  max-width: 345px;
-  text-align: center;
-  line-height: var( --line-height-small);
-  
-}
-
-button {
-  border-radius: 5px;
-   border: 0;
-   transition: transform 0.2s ease;
-    transform-origin: center;
-}
-
-button:enabled:hover {
-  transform: scale(1.10); /* ~2% larger */
-}
-
-
-.txt-small {
-  color: var(--color-text);
-  font-size: var(--font-size-small);
-
-}
-
-.error {
-  color: var(--color-error);
-  font-size: 12px;
-  font-weight: var(--font-weight-light);
-  animation: slideFadeIn 0.3s ease-out;
-  position: absolute;
-  top: 100%;     
-
+.txt-secondary {
+  color: var(--color-secondary);
 }
 
 
@@ -83,7 +54,8 @@ button:enabled:hover {
   src: url(/Client/src/assets/Fonts/IBM_Plex_Sans/ibmplexsans-variablefont_wdthwght-webfont.woff);
 }
 
-@keyframes slideFadeIn {
-  0%   { opacity: 0; transform: translateY(-5px); }
-  100% { opacity: 1; transform: translateY(0); }
+button {
+  margin: 0;
+  background-color: transparent !important;
+  border: none ;
 }

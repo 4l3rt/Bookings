@@ -1,34 +1,10 @@
 :root {
 
-  --font-size-small: 16px;
-  --font-size-medium: 26px;
-  --font-size-large: 48px;
-  --font-size-largest: 58px;
-  --font-size-error: 2px
+  --font-size-regular: 16px;
+
+  --font-size-error: 2px;
   
-  --font-weight-light: 200;
-  --font-weight-medium-light: 400;
-  --font-weight-medium: 500;
-  --font-weight-medium-havy: 600;
-  --font-weight-heavy: 700;
-
-  --line-height-smallest: 110%;
-  --line-height-small: 130%;
-
-  --margin-smallest: 5px;
-  --margin-smaller: 10px;
-  --margin-small: 15px;
-  --margin-medium-small: 20px;
-  --margin-medium: 25px;
-
-  
-  --color-secondary: #EDEDEDFF;
-  --color-transparent: #322929FF;
-  --color-text: #fff;
-  --text-secondary: #AAAAAA;
-  --color-bg: #2B2B2B;
-  --color-error: red;
-
+  --font-weight-regular: 400;
 }
 
 
@@ -40,9 +16,8 @@
 
 @media screen and (max-width: 1050px) {
   :root {
-    --font-size-67: 38px;
-    --line-height-110: 120%;
-    --line-height-160: 140%;
+    --font-size-regular: 12px;
+
 
   }
 }
