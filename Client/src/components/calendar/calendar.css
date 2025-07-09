@@ -18,18 +18,11 @@
   border-radius: 50%; 
 }
 
-
-
 .react-datepicker__day:hover {
   background-color: #ffe1cc;
 
 }
 
-
-
-
-
-.react-datepicker__day:hover ,
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__day--in-range:hover {
   color: var(--color-bg) !important;

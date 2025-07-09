@@ -5,12 +5,37 @@
   align-items: center;
 }
 
+.sno__header_content-wrapper {
+  position: relative;
+  width: 1068px;
+  height: 528px;
+  margin: 10px 0 40px 0
 
+}
+
+.sno__header_form_option-wrapper {
+  display: flex;
+  height: 96%;
+  align-items: center;
+  transition: transform 0.5s ease;
+}
+
+.sno__header_form_option-wrapper:hover {
+  align-items: center;
+  transform: scale(0.98);
+  transition: transform 0.5s ease;
+}
+
+.sno__header_form_option-wrapper:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
 
 .sno__header_form {
   position: absolute;
-  top: 100%;
-  margin-top: 30px;
+  top: 92%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   background-color: var(--color-bg);
@@ -23,7 +48,7 @@
 
 .sno__header_form_split {
   background-color: var(--color-secondary);
-  width: 2px;
+  width: 1px;
   height: 40px;
   margin: 0 16px;
 }

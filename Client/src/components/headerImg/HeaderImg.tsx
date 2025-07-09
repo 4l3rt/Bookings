@@ -1,6 +1,6 @@
 import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import {mainImg} from "../../assets"
-import { ROOM_IMAGES } from "../../utils/roomImages";
+import { ROOM_IMAGES } from "@/utils/roomImages";
 import "./headerImg.css";
 
 interface HeaderImageProps {

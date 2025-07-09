@@ -1,13 +1,11 @@
 import {twinRoomImg,
   doubleRoomImg,
   familyRoomImg,
-} from "../assets" 
-
-
+} from "@/assets" 
 
 
 export const ROOM_IMAGES: Record<string, string> = {
-  "Twin Room (90GEL/night)": twinRoomImg,
-  "Double Room (110GEL/night)": doubleRoomImg,
-  "Family Room (130GEL/night)": familyRoomImg,
+  "Twin Room (90 GEL)": twinRoomImg,
+  "Double Room (110 GEL)": doubleRoomImg,
+  "Family Room (130 GEL)": familyRoomImg,
 };

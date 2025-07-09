@@ -2,8 +2,8 @@ import "./calendar.css";
 import React, { useMemo, forwardRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { IconCard } from "../../components";
-import { calendarSvg } from "../../assets"; // Adjust path if needed
+import { IconCard } from "@/components";
+import { calendarSvg } from "@/assets"; // Adjust path if needed
 import { format } from "date-fns";
 
 type CalendarPickerProps = {
@@ -48,11 +48,11 @@ export const Calendar: React.FC<CalendarPickerProps> = ({
   const MemoizedInput = useMemo(() => {
     return forwardRef<HTMLDivElement, { onClick?: () => void }>(({ onClick }, ref) => {
       const displayValue = selectedDate ? format(selectedDate, "MM/dd/yyyy") : "";
-
       return (
         <div ref={ref} onClick={onClick} className="datepicker-input-wrapper" >
           <IconCard
             icon={calendarSvg}
+            type="display"
             heading={isCheckIn ? "Check In" : "Check Out"}
             text={displayValue || "Select date"}
           />

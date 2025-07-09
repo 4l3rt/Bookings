@@ -35,7 +35,7 @@ a:link, a:visited, a:hover, a:active {
 .txt-secondary, .txt-primary {
   font-size: var(--font-size-regular);
   font-weight: var(--font-weight-regular);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 
 }
 
@@ -46,16 +46,32 @@ a:link, a:visited, a:hover, a:active {
 
 .txt-secondary {
   color: var(--color-secondary);
+  font-weight: var(--font-weight-light);
 }
 
 
-@font-face {
-  font-family: IBM_Plex_Sans;
-  src: url(/Client/src/assets/Fonts/IBM_Plex_Sans/ibmplexsans-variablefont_wdthwght-webfont.woff);
-}
 
 button {
   margin: 0;
   background-color: transparent !important;
   border: none ;
+}
+
+.icon-card_content-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100% ;
+    height: 100% ;
+}
+
+.icon {
+    max-width: 35px;
+    margin-right: 10px;
+}
+
+.card-text {
+  width: 184px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }

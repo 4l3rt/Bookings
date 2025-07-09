@@ -4,14 +4,11 @@
 
   --font-size-error: 2px;
   
+  --font-weight-light: 200;
   --font-weight-regular: 400;
 }
 
 
-@font-face {
- font-family: 'IBM Plex Sans';
-  src: url(./assets/Fonts/ibmplexsans-variablefont_wdthwght-webfont.woff)
-}
 
 
 @media screen and (max-width: 1050px) {
