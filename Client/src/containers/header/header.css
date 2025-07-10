@@ -60,32 +60,60 @@
 }
 
 
-.sno__header_form_additional{
+.sno__header_form_additional {
   position: absolute;
+  top: 32px;
+  left: 24.5px;
   z-index: 2;
-  top: 0;
-  bottom: 0;
-  height: 300px;
   background-color: var(--color-bg);
   border-radius: 50px;
+  overflow: hidden;
+  height: 0;
+  padding: 0 32px; /* only horizontal, not vertical yet */
+  transition: height 0.25s ease, padding 0.25s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-
-
-  
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
 }
+
+.slide-visible {
+  height: 430px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  pointer-events: auto;
+}
+
 
 .sno__header_form_additional_counts {
  display: flex;
+ width: 200px;
+ justify-content: space-between;
 
+
+}
+
+.additional-card-dropDown {
+  width: 175px;
 }
 
 
 .Sno__header_form_additional_select {
-  max-width: 150px !important;
+  max-width: 215px !important;
   height: auto !important;
   display: flex;
   align-items: center;
 }
+
+.Sno__header_submit-btn {
+  background-color: var(--color-primary) !important;
+  padding: 8px 0;
+  color: #fff !important;
+  width: 215px;
+  border-radius: 8px;
+}
+
+
+
 

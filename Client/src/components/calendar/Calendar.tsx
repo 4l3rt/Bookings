@@ -3,17 +3,36 @@ import React, { useMemo, forwardRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IconCard } from "@/components";
-import { calendarSvg } from "@/assets"; // Adjust path if needed
+import { calendarSvg } from "@/assets";
 import { format } from "date-fns";
 
 type CalendarPickerProps = {
-  isCheckIn: boolean; // true = check-in, false = check-out
+  isCheckIn: boolean;
   linkedDate: Date | null;
   selectedDate: Date | null;
   onDateChange: (date: Date | null) => void;
   bookedRanges: Array<{ start: Date; end: Date }>;
 };
 
+// --- STABLE CUSTOM INPUT ---
+const DatepickerInput = forwardRef<
+  HTMLDivElement,
+  { onClick?: () => void; label: string; value: string }
+>(({ onClick, label, value }, ref) => {
+  return (
+    <div ref={ref} onClick={onClick} className="datepicker-input-wrapper">
+      <IconCard
+        icon={calendarSvg}
+        type="display"
+        heading={label}
+        text={value || "Select date"}
+      />
+    </div>
+  );
+});
+DatepickerInput.displayName = "DatepickerInput";
+
+// --- MAIN COMPONENT ---
 export const Calendar: React.FC<CalendarPickerProps> = ({
   isCheckIn,
   linkedDate,
@@ -47,22 +66,6 @@ export const Calendar: React.FC<CalendarPickerProps> = ({
     onDateChange(date);
   };
 
-  const MemoizedInput = useMemo(() => {
-    return forwardRef<HTMLDivElement, { onClick?: () => void }>(({ onClick }, ref) => {
-      const displayValue = selectedDate ? format(selectedDate, "MM/dd/yyyy") : "";
-      return (
-        <div ref={ref} onClick={onClick} className="datepicker-input-wrapper" >
-          <IconCard
-            icon={calendarSvg}
-            type="display"
-            heading={isCheckIn ? "Check In" : "Check Out"}
-            text={displayValue || "Select date"}
-          />
-        </div>
-      );
-    });
-  }, [isCheckIn, selectedDate]);
-
   return (
     <DatePicker
       selected={selectedDate}
@@ -76,10 +79,16 @@ export const Calendar: React.FC<CalendarPickerProps> = ({
       onKeyDown={(e) => e.preventDefault()}
       popperPlacement="top-start"
       shouldCloseOnSelect
-      customInput={React.createElement(MemoizedInput)}
+      customInput={
+        <DatepickerInput
+          label={isCheckIn ? "Check In" : "Check Out"}
+          value={selectedDate ? format(selectedDate, "MM/dd/yyyy") : ""}
+        />
+      }
+      popperContainer={({ children }) => (
+        <div className="datepicker-popper-wrapper">{children}</div>
+      )}
       excludeDateIntervals={bookedRanges}
-
-
     />
   );
 };
