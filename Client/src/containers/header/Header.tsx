@@ -1,15 +1,17 @@
 
-
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import "./header.css";
 import { Calendar, HeaderImg, SelectCard, CountCard, InputCard } from "@/components";
 import { ROOM_IMAGES, PLATFORMS, PAYMENT_OPTIONS } from "@/utils";
 import { submitBooking } from "@/services/bookingService"
 import { bedSvg, adultSvg,kidSvg, phoneSvg, bellSvg, walletSvg, nameSvg,} from "@/assets";
 import type { HeaderImgRef } from "@/components/headerImg/HeaderImg.tsx";
+import { fetchAvailability } from "@/services/availabilityService";
+
 
 
 export function Header() {
+  const [bookedRanges, setBookedRanges] = useState<Array<{ start: Date; end: Date }>>([]);
   const [room, setRoom] = useState<RoomType>("Select Room")
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
@@ -24,9 +26,9 @@ export function Header() {
 
 
   const roomId = (room: RoomType) => {
-      if (room === 'Twin Room (90 GEL)') return 1;
-      if (room === 'Double Room (110 GEL)') return 2;
-      return 3;
+      if (room === 'Twin Room (90 GEL)') return "1";
+      if (room === 'Double Room (110 GEL)') return "2";
+      return "3";
   };
 
   type RoomType = string;
@@ -49,6 +51,15 @@ export function Header() {
     const roomRate = ROOM_RATES[room];
     const total = nights * roomRate;
 
+
+useEffect(() => {
+  const getBookedDates = async () => {
+    const parsed = await fetchAvailability(roomId(room));
+    setBookedRanges(parsed);
+  };
+
+  getBookedDates();
+}, [room]);
 
 
 const handleSubmit = async () => {
@@ -78,7 +89,7 @@ const handleSubmit = async () => {
 
   return (
     <div className="sno__header">
-      <form className="sno__header_content-wrapper">
+      <form onSubmit={handleSubmit} className="sno__header_content-wrapper">
         <HeaderImg ref={headerImgRef} selectedLabel={room} />
         <div className="sno__header_form">
           <div className="sno__header_form_option-wrapper clickable-thing">
@@ -105,6 +116,7 @@ const handleSubmit = async () => {
               linkedDate={checkOut}
               selectedDate={checkIn}
               onDateChange={setCheckIn}
+              bookedRanges={bookedRanges}
             />
             <div className="sno__header_form_split" />
           </div>
@@ -114,6 +126,7 @@ const handleSubmit = async () => {
               linkedDate={checkIn}
               selectedDate={checkOut}
               onDateChange={setCheckOut}
+              bookedRanges={bookedRanges}
             />
           </div>
         </div>
@@ -167,7 +180,7 @@ const handleSubmit = async () => {
             className={["Sno__header_form_additional_select", "additional-card-text"]}
             />
 
-            <button type="submit" onSubmit={() => handleSubmit()} className="Sno__header_submit-btn">Book Now</button>
+            <button type="submit"  className="Sno__header_submit-btn">Book Now</button>
             {total}
 
         </div>

@@ -11,6 +11,7 @@ type CalendarPickerProps = {
   linkedDate: Date | null;
   selectedDate: Date | null;
   onDateChange: (date: Date | null) => void;
+  bookedRanges: Array<{ start: Date; end: Date }>;
 };
 
 export const Calendar: React.FC<CalendarPickerProps> = ({
@@ -18,6 +19,7 @@ export const Calendar: React.FC<CalendarPickerProps> = ({
   linkedDate,
   selectedDate,
   onDateChange,
+  bookedRanges
 }) => {
   const today = useMemo(() => new Date(), []);
 
@@ -75,6 +77,9 @@ export const Calendar: React.FC<CalendarPickerProps> = ({
       popperPlacement="top-start"
       shouldCloseOnSelect
       customInput={React.createElement(MemoizedInput)}
+      excludeDateIntervals={bookedRanges}
+
+
     />
   );
 };
