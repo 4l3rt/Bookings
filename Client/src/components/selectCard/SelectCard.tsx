@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 interface IconCardProps {
   icon: string;
   heading: string;
-  className: string;
+  className: string[];
   text?: string;
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: string) => void ;
   options?: string[];
   onHoverOptionChange?: (hoveredOption: string | null) => void;
   onOptionSelect?: (selectedOption: string) => void;
@@ -38,7 +38,7 @@ export const SelectCard = forwardRef<HTMLDivElement, IconCardProps>(
 
       return (
         <div
-          className={`icon-card_content-wrapper ${className}`}
+          className={className[0]}
           style={{ cursor: "pointer", position: "relative" }}
           onClick={() => setOpen(!open)}
         >
@@ -50,7 +50,7 @@ export const SelectCard = forwardRef<HTMLDivElement, IconCardProps>(
           <AnimatePresence>
             {open && (
               <motion.div
-                className={`icon-card-dropdown ${className}` }
+                className={`icon-card-dropdown ${className[1]}`  }
                 initial={{ height: 0 }}
                 animate={{ height: "auto" }}
                 exit={{ height: 0 }}

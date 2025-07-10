@@ -1,12 +1,16 @@
-import { useState, useRef } from "react";
+
+
+import { useState, useRef, useMemo } from "react";
 import "./header.css";
-import { Calendar, HeaderImg, SelectCard, CountCard, InputCard } from "../../components";
+import { Calendar, HeaderImg, SelectCard, CountCard, InputCard } from "@/components";
 import { ROOM_IMAGES, PLATFORMS, PAYMENT_OPTIONS } from "@/utils";
+import { submitBooking } from "@/services/bookingService"
 import { bedSvg, adultSvg,kidSvg, phoneSvg, bellSvg, walletSvg, nameSvg,} from "@/assets";
 import type { HeaderImgRef } from "@/components/headerImg/HeaderImg.tsx";
 
+
 export function Header() {
-  const [room, setRoom] = useState<string>("");
+  const [room, setRoom] = useState<RoomType>("Select Room")
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
   const headerImgRef = useRef<HeaderImgRef>(null);
@@ -14,8 +18,62 @@ export function Header() {
   const [kids, setKids] = useState<number>(0);
   const [name, setName] = useState<string>("")
   const [phone, setPhone] = useState('');
-  const [platform, setPlatform] = useState<string | undefined>("Signal");
+  const [notifyVia, setNotifyVia] = useState<string | undefined>("Signal");
   const [payment, setPayment] = useState<string | undefined>("Select payment method");
+
+
+
+  const roomId = (room: RoomType) => {
+      if (room === 'Twin Room (90 GEL)') return 1;
+      if (room === 'Double Room (110 GEL)') return 2;
+      return 3;
+  };
+
+  type RoomType = string;
+
+    const nights = useMemo(() => {
+      if (!checkIn || !checkOut) return 0;
+      const msPerDay = 1000 * 60 * 60 * 24;
+      return Math.max(
+        0,
+        Math.ceil((checkOut.getTime() - checkIn.getTime()) / msPerDay)
+      );
+    }, [checkIn, checkOut]);
+
+    const ROOM_RATES: Record<RoomType, number> = {
+    'Twin Room (90 GEL)': 90,
+    'Double Room (110 GEL)': 110,
+    'Family Room (130 GEL)': 130,
+  };
+
+    const roomRate = ROOM_RATES[room];
+    const total = nights * roomRate;
+
+
+
+const handleSubmit = async () => {
+  const payload = {
+  name,
+  phone,
+  roomId: String(roomId),
+  checkIn: checkIn!.toISOString(),
+  checkOut: checkOut!.toISOString(),
+  adults,
+  kids,
+  notifyVia,
+  total
+} 
+
+  try {
+    await submitBooking(payload);
+    alert("Booking submitted successfully!");
+    window.location.reload();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to send booking.");
+  }
+}
+
 
   return (
     <div className="sno__header">
@@ -27,7 +85,7 @@ export function Header() {
               icon={bedSvg}
               heading="Room"
               text="Select room"
-              className="icon-card_content-wrapper"
+              className={["icon-card_content-wrapper", "card-text"]}
               value={room}
               options={Object.keys(ROOM_IMAGES)}
               onChange={setRoom}
@@ -92,10 +150,10 @@ export function Header() {
             icon={bellSvg}
             heading="Notify me via"
             text="Select Platform"
-            value={platform}
-            onChange={setPlatform}
+            value={notifyVia}
+            onChange={setNotifyVia}
             options={Object.keys(PLATFORMS)}
-            className="Sno__header_form_additional_select"
+            className={["Sno__header_form_additional_select", "additional-card-text"]}
             />
 
             <SelectCard
@@ -105,8 +163,11 @@ export function Header() {
             value={payment}
             onChange={setPayment}
             options={Object.keys(PAYMENT_OPTIONS)}
-            className="Sno__header_form_additional_select"
+            className={["Sno__header_form_additional_select", "additional-card-text"]}
             />
+
+            <button type="submit" onSubmit={() => handleSubmit()} className="Sno__header_submit-btn">Book Now</button>
+            {total}
 
         </div>
       </form>

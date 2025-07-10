@@ -107,7 +107,6 @@ export function Header() {
   //     notifyVia,
   //     total,
   //     source: "manual",
-
   //   };
 
   //   try {

@@ -30,6 +30,8 @@
   transition: transform 0.1s ease;
 }
 
+
+
 .sno__header_form {
   position: absolute;
   top: 92%;
@@ -83,5 +85,7 @@
 .Sno__header_form_additional_select {
   max-width: 150px !important;
   height: auto !important;
+  display: flex;
+  align-items: center;
 }
 
