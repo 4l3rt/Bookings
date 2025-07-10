@@ -1,5 +1,5 @@
 export const PAYMENT_OPTIONS: Record<string, string> = {
-  "cash": "locally with cash",
-  "paypal": "coming soon.."
+  "locally with cash": "locally with cash",
+  "coming soon...": "coming soon.."
   
 };

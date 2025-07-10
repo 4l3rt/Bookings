@@ -66,7 +66,7 @@ const handleSubmit = async () => {
   const payload = {
   name,
   phone,
-  roomId: String(roomId),
+  roomId: roomId(room),
   checkIn: checkIn!.toISOString(),
   checkOut: checkOut!.toISOString(),
   adults,
