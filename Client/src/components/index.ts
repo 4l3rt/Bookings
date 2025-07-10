@@ -4,4 +4,6 @@ export { Calendar  } from "./calendar/Calendar";
 export { HeaderImg  } from "./headerImg/HeaderImg";
 export { SelectCard } from "./selectCard/SelectCard"
 export { CountCard } from "./countCard/CountCard"
+export { InputCard } from "./inputCard/inputCard"
+
 

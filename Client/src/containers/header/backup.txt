@@ -38,8 +38,7 @@ export function Header() {
 
   //   const [adults, setAdults] = useState<number>(1);
   //   const [kids, setKids] = useState<number>(0);
-  //   const [name, setName] = useState<string>("")
-  //   const [phone, setPhone] = useState('');
+  
   //   const roomId = (room: RoomType) => {
   //     if (room === 'twin') return 1;
   //     if (room === 'double') return 2;

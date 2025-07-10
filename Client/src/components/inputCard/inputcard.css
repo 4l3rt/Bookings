@@ -1,0 +1,47 @@
+.input-card_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.input-card_input {
+  max-width: 145px;
+  height: 35px;
+  border: 1px solid #C7C7C7;
+  background-color: transparent;
+  border-radius: 8px;
+  outline: none;
+  padding-left: 10px;
+  font-size: var(--font-size-small);
+}
+
+
+.input-card_input:focus {
+  border: 1px solid #777777;
+}
+
+.input-card_label {
+  position: absolute;
+  left: 2rem;
+  top: 0.6rem;
+  margin-left: 6px;
+  background-color: var(--color-bg);
+  font-size: 0.75rem;
+  color: var(--color-secondary);
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-card_label.floating {
+  top: -10px;
+  color: var(--color-txt);
+  font-weight: 200;
+}
+
+
+
+
+
+
+
