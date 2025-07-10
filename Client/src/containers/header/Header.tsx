@@ -61,6 +61,7 @@ const handleSubmit = async () => {
   adults,
   kids,
   notifyVia,
+  payment,
   total
 } 
 

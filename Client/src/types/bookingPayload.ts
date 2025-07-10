@@ -8,5 +8,6 @@ export interface BookingPayload {
   adults: number;
   kids: number;
   notifyVia?: string;
+  payment?: string;
   total: number;
 }
